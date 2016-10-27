@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "dist/main.bundle.js",
   "license": "MIT",
+  "engines": { "node": ">= 6" },
   "scripts": {
     "build": "npm run clean && npm run mkdir && npm run build:webpack",
     "build:webpack": "./node_modules/.bin/webpack",
