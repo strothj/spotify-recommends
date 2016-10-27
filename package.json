@@ -1,17 +1,39 @@
 {
   "name": "spotify-recommend",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "dist/main.bundle.js",
   "license": "MIT",
+  "scripts": {
+    "build": "npm run clean && npm run mkdir && npm run build:webpack",
+    "build:webpack": "./node_modules/.bin/webpack",
+    "clean": "rm -rf bin",
+    "mkdir": "mkdir -p bin/public",
+    "start": "node ./bin/main.bundle.js",
+    "test": "./node_modules/.bin/mocha-webpack \"src/**/*.test.js\"",
+    "test:watch": "npm run test -- --watch"
+  },
   "dependencies": {
     "express": "^4.14.0",
     "unirest": "^0.5.1"
   },
   "devDependencies": {
+    "babel-core": "^6.18.0",
+    "babel-loader": "^6.2.5",
+    "babel-plugin-syntax-async-functions": "^6.13.0",
+    "babel-plugin-transform-regenerator": "^6.16.1",
+    "babel-polyfill": "^6.16.0",
+    "babel-preset-es2015": "^6.18.0",
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
     "eslint": "^3.6.0",
     "eslint-config-airbnb": "^12.0.0",
     "eslint-plugin-import": "^1.16.0",
     "eslint-plugin-jsx-a11y": "^2.2.2",
-    "eslint-plugin-react": "^6.3.0"
+    "eslint-plugin-react": "^6.3.0",
+    "mocha": "^3.1.2",
+    "mocha-webpack": "^0.7.0",
+    "source-map-support": "^0.4.5",
+    "webpack": "2.1.0-beta.25",
+    "webpack-node-externals": "^1.5.4"
   }
 }
