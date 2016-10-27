@@ -1,15 +1,19 @@
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
 module.exports = {
-  entry: ['babel-polyfill', './src/main.js'],
+  entry: ['babel-regenerator-runtime', './src/main.js'],
   output: {
     path: './bin',
     filename: 'main.bundle.js',
   },
   module: {
-    rules: [{
+    loaders: [{
       test: /\.js$/,
       exclude: /node_modules/,
       loader: 'babel-loader',
     }],
   },
-  devtool: 'cheap-module-source-map',
+  plugins: [
+    new CopyWebpackPlugin([{ from: 'public', to: 'public' }]),
+  ],
 };

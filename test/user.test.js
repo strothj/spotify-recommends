@@ -1,6 +1,5 @@
 import chai from 'chai';
-import regeneratorRuntime from 'regenerator-runtime/runtime';
-import User from '../user';
+import User from '../src/user';
 
 chai.should();
 
