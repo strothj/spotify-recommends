@@ -9,12 +9,13 @@
   "scripts": {
     "build": "npm run clean && npm run mkdir && npm run build:webpack",
     "build:webpack": "./node_modules/.bin/webpack",
-    "watch": "npm run build && npm run build:webpack -- --watch",
     "clean": "rm -rf bin",
+    "lint": "./node_modules/.bin/eslint src/**/*.js test/**/*.js",
     "mkdir": "mkdir -p bin/public",
     "start": "node ./bin/main.bundle.js",
     "test": "./node_modules/.bin/mocha --compilers js:babel-register --require babel-regenerator-runtime",
-    "test:watch": "npm run test -- --watch"
+    "test:watch": "npm run test -- --watch",
+    "watch": "npm run build && npm run build:webpack -- --watch"
   },
   "dependencies": {
     "express": "^4.14.0",

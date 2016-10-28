@@ -25,10 +25,11 @@ export function search(name) {
   });
 }
 
-export async function searchRelated(id) {
+/* eslint-disable */
+export function searchRelated(id) {
   return;
 }
 
-export async function searchWithRelated(name) {
+export function searchWithRelated(name) {
   return;
 }
