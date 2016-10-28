@@ -17,21 +17,33 @@ describe('Spotify', () => {
   });
 
   describe('search', () => {
-    it('emits "end" event with result object on success', (done) => {
-      const service = nock('https://api.spotify.com')
+    let service;
+    beforeEach(() => {
+      service = nock('https://api.spotify.com')
         .get('/v1/search')
-        .query({
-          q: 'some artist',
-          limit: 1,
-          type: 'artist',
-        })
-        .reply(200, fixtures.artistResult);
+        .query({ q: 'some artist', limit: 1, type: 'artist' });
+    });
+
+    it('emits "end" event with result object on success', (done) => {
+      service = service.reply(200, fixtures.artistResult);
 
       const emitter = spotify.search('some artist');
       emitter.should.be.an.instanceOf(EventEmitter);
       emitter.on('end', (response) => {
         response.should.deep.equal(fixtures.artistResult);
-        service.isDone().should.equal(true);
+        service.done();
+        done();
+      });
+    });
+
+    it('emits "error" event with error code on failure', (done) => {
+      service = service.reply(400);
+
+      const emitter = spotify.search('some artist');
+      emitter.should.be.an.instanceOf(EventEmitter);
+      emitter.on('error', (code) => {
+        code.should.equal(400);
+        service.done();
         done();
       });
     });
