@@ -8,12 +8,12 @@
   },
   "scripts": {
     "build": "npm run clean && npm run mkdir && npm run build:webpack",
-    "build:webpack": "./node_modules/.bin/webpack",
+    "build:webpack": "webpack",
     "clean": "rm -rf bin",
-    "lint": "./node_modules/.bin/eslint src/**/*.js test/**/*.js",
+    "lint": "eslint src/**/*.js test/**/*.js",
     "mkdir": "mkdir -p bin/public",
     "start": "node ./bin/main.bundle.js",
-    "test": "./node_modules/.bin/mocha --compilers js:babel-register --require babel-regenerator-runtime",
+    "test": "mocha --compilers js:babel-register --require babel-regenerator-runtime",
     "test:watch": "npm run test -- --watch",
     "watch": "npm run build && npm run build:webpack -- --watch"
   },
