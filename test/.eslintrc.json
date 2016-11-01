@@ -4,6 +4,7 @@
   },
   "rules": {
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
-    "no-unused-expressions": "off"
+    "no-unused-expressions": "off",
+    "padded-blocks": "off"
   }
 }

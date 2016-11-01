@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "express": "^4.14.0",
+    "latest": "^0.2.0",
     "unirest": "^0.5.1"
   },
   "devDependencies": {
@@ -28,7 +29,7 @@
     "babel-plugin-transform-es2015-modules-commonjs": "^6.18.0",
     "babel-plugin-transform-regenerator": "^6.16.1",
     "babel-regenerator-runtime": "^6.5.0",
-    "chai": "^3.5.0",
+    "chai": "4.0.0-canary.1",
     "chai-http": "^3.0.0",
     "copy-webpack-plugin": "^4.0.0",
     "eslint": "^3.6.0",
