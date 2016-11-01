@@ -1,9 +1,9 @@
-// import { EventEmitter } from 'events';
+import { EventEmitter } from 'events';
 import unirest from 'unirest';
 
 const apiEndpoint = 'https://api.spotify.com/v1/';
 
-async function getFromApi(endpoint, args) {
+function getFromApi(endpoint, args) {
   return new Promise((fulfill, reject) => {
     unirest.get(`${apiEndpoint}${endpoint}`)
       .qs(args)
@@ -17,12 +17,20 @@ async function getFromApi(endpoint, args) {
   });
 }
 
-function search(name) {
-  return getFromApi('search', {
+function search(name, service) {
+  const spotService = service || getFromApi;
+  const emitter = new EventEmitter();
+
+  spotService('search', {
     q: name,
     limit: 1,
     type: 'artist',
+  }).then((response) => {
+    emitter.emit('end', response.artists.items[0]);
+  }).catch((response) => {
+    emitter.emit('error', response);
   });
+  return emitter;
 }
 
 /* eslint-disable */
