@@ -17,9 +17,8 @@ describe('Spotify', () => {
     afterEach(() => { nock.cleanAll(); nock.enableNetConnect(); });
 
     it('returns code 500 on network error', (done) => {
-      const responsePromise = spotify.getFromApi('search', 'slipknot');
-      responsePromise.catch((response) => {
-        response.should.be.a('number');
+      spotify.getFromApi('search', 'slipknot').catch((response) => {
+        response.should.equal(500);
         done();
       });
     });
