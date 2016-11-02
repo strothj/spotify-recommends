@@ -6,7 +6,7 @@ const app = express();
 app.use(express.static('public'));
 
 app.get('/search/:name', (req, res) => {
-  const emitter = spotify.search(req.params.name);
+  const emitter = spotify.searchWithRelated(req.params.name);
   emitter.on('end', (response) => {
     res.json(response);
   });

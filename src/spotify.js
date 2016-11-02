@@ -33,18 +33,26 @@ function search(name, service) {
   return emitter;
 }
 
-/* eslint-disable */
-function searchRelated(id) {
-  return;
-}
-
 function searchWithRelated(name) {
-  return;
+  const searchEmitter = search(name);
+  const emitter = new EventEmitter();
+
+  searchEmitter.on('end', (artist) => {
+    getFromApi(`artists/${artist.id}/related-artists`, {})
+      .then((relatedResponse) => {
+        const response = Object.assign({}, artist);
+        response.related = relatedResponse.artists;
+        emitter.emit('end', response);
+      }).catch((response) => {
+        emitter.emit('error', response);
+      });
+  });
+
+  return emitter;
 }
 
 export default {
-  getFromApi: getFromApi,
-  search: search,
-  searchRelated: searchRelated,
-  searchWithRelated: searchWithRelated
-}
+  getFromApi,
+  search,
+  searchWithRelated,
+};
