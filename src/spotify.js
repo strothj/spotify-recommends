@@ -47,6 +47,39 @@ function searchWithRelated(name) {
         emitter.emit('error', response);
       });
   });
+  searchEmitter.on('error', (response) => {
+    emitter.emit('error', response);
+  });
+
+  return emitter;
+}
+
+function searchWithTopTracks(name) {
+  const searchEmitter = searchWithRelated(name);
+  const emitter = new EventEmitter();
+
+  searchEmitter.on('end', (artist) => {
+    const response = Object.assign({}, artist);
+    const topTrackPromises = [];
+    response.related.forEach((relatedArtist) => {
+      const topTrackPromise = getFromApi(`artists/${relatedArtist.id}/top-tracks`, { country: 'US' });
+      topTrackPromises.push(topTrackPromise);
+    });
+    Promise.all(topTrackPromises)
+      .then((topTrackResponses) => {
+        topTrackResponses.forEach((topTrackResponse, index) => {
+          response.related[index].tracks = topTrackResponse.tracks;
+        });
+        emitter.emit('end', response);
+      })
+      .catch((err) => {
+        emitter.emit('error', err);
+      });
+  });
+
+  searchEmitter.on('error', (response) => {
+    emitter.emit('error', response);
+  });
 
   return emitter;
 }
@@ -55,4 +88,5 @@ export default {
   getFromApi,
   search,
   searchWithRelated,
+  searchWithTopTracks,
 };
